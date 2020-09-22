@@ -1,5 +1,5 @@
 import Axios, { AxiosResponse } from 'axios'
-import { FormKeys } from '@/types/FormKeys'
+import { FormKeys } from 'nettbureau_common'
 
 
 export const sendUserData = (userData: Record<FormKeys, string>): Promise<AxiosResponse<any>> => {

@@ -10,7 +10,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "baseUrl": ".",
+    "baseUrl": "..",
     "noEmit": true,
     "types": [
       "webpack-env",
@@ -36,6 +36,6 @@
     "tests/**/*.tsx"
   ],
   "exclude": [
-    "node_modules"
+    "../node_modules"
   ]
 }

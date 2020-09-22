@@ -96,7 +96,6 @@
              <v-btn
                  color="#3060AE"
                  class="white--text"
-                 :disabled="!validForm"
                  @click="createUser"
              >
              Opprett bruker
@@ -112,8 +111,8 @@
 <script lang="ts">
   import {Vue, Component} from 'vue-property-decorator'
   import HelloWorld from '../components/HelloWorld.vue'
-  import {FormKeys} from '@/types/FormKeys'
-  import {sendUserData} from '@/api/UserApi'
+  import {FormKeys} from 'nettbureau_common'
+  import {sendUserData} from '../api/UserApi'
 
   @Component({
     components: { HelloWorld }
