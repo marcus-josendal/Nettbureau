@@ -1,7 +1,16 @@
 module.exports = {
-    presets: ['@babel/env', '@babel/typescript'],
+    presets: [
+        '@babel/typescript',
+        ["@babel/preset-env", {
+            "targets": {
+                "esmodules": true
+            }
+        }
+        ]
+    ],
     plugins: [
         '@babel/proposal-class-properties',
-        '@babel/proposal-object-rest-spread'
+        '@babel/proposal-object-rest-spread',
+        '@babel/plugin-transform-async-to-generator'
     ]
 }
