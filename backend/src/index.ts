@@ -1,10 +1,14 @@
 import express from 'express'
+import dotenv from 'dotenv'
 import * as bodyParser from 'body-parser'
-import {ErrorResponse, FormKeys, formRules} from 'nettbureau_common'
-import {isNotNull} from './utils/isNotNull'
 import * as postNumbers from '../post_number.json'
+import {sendMail} from './mail/mailerService'
+import {isNotNull} from './utils/isNotNull'
+import {ErrorResponse, FormKeys, formRules} from 'nettbureau_common'
+import {createConfirmMail, createPersonaMail} from './mail/mailTemplates'
 const app = express()
 app.use(bodyParser.json())
+dotenv.config()
 
 type ValidationRule = (value: string) => boolean | string
 
@@ -35,7 +39,19 @@ app.post('/api/user', async (req, res) => {
         ...validateAgainstRules(formRules.required, formData.address, FormKeys.Address),
     ]
 
-    //await sendMail('marcus19971997@gmail.com', 'Personal info', formData)
+    if(validationResult.length === 0) {
+        try {
+            const ioMessage = createPersonaMail(formData)
+            await sendMail('marcus19971997@gmail.com', 'Personal info', ioMessage)
+
+            const confirmMessage = createConfirmMail(`${formData.firstName} ${formData.surName}`)
+            await sendMail(formData.email, 'We recieved your personal data', confirmMessage)
+            res.send(200)
+        } catch (err) {
+            res.status(500).send({error: err})
+        }
+    }
+
 })
 
 app.listen(8081, () => {

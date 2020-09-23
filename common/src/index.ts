@@ -16,3 +16,4 @@ export const formRules = {
 }
 
 export * from './types/FormKeys'
+export * from './types/ErrorResponse'
