@@ -11,7 +11,7 @@ export const formRules = {
   ],
   zipCode: [
     (v: string) => /^\d+$/.test(v) || 'Kun tall i postnummeret',
-    (v: string) => v.length === 4 || 'Mobilnummeret må være 4 karakterer langt'
+    (v: string) => v.length === 4 || 'Postnummeret må være 4 karakterer langt'
   ]
 }
 
