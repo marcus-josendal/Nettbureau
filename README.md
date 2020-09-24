@@ -16,10 +16,14 @@ GMAIL_USERNAME=? //example: ola.nordmann@gmail.com
 GMAIL_PASSWORD=?
 ````
 
-The backend runs on port `8081`, so make sure you dont have anything else running at that port. 
-Now you can build and run the backend by running `yarn start:backend` from the root folder.
+The backend runs on port `8081`, so make sure you don't have anything else running at that port. 
+First build the backend by running `yarn build:backend` from root, then run `yarn start:backend`, also
+from root.  
 
 ### 3. Running the frontend
+
+It's important that you have run `yarn build:backend` before you run the Frontend. When you are building
+the backend, you are also building the files that the frontend and backend have in common. 
 ````
 yarn start:frontend
 ````
