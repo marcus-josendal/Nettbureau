@@ -169,7 +169,7 @@ export default class Home extends Vue {
           this.sentForm = true
           this.resetState()
         }).catch((err: InvalidFormError) => {
-          if (err.response.status === 400) {
+          if (err.response?.status === 400) {
             this.formValuesSnapshot = {...this.formValues}
             this.errorMessages = this.buildError(err.response.data.error)
           } else {
@@ -190,7 +190,6 @@ export default class Home extends Vue {
 
   resetState() {
     //@ts-ignore
-    this.sentForm = false
     this.$refs.form.resetValidation()
     Object.keys(this.formValues).forEach(key => this.formValues[key as FormKeys] = '')
     if(this.errorMessages) {
