@@ -9,7 +9,7 @@ yarn install
 
 ### 2. Running the backend
 For the backend to run you will need a gmail account to send e-mails. The gmail account needs to have "less secure apps" enabled.
-To configure the backend to use your account you have to add an `.env` file in the backend/ folder with the following content.
+To configure the backend you have to add an `.env` file in the backend/ folder with the following content.
 
 ````.env
 GMAIL_USERNAME=? //example: ola.nordmann@gmail.com
