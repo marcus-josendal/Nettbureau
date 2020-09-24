@@ -127,9 +127,8 @@
 
 <script lang="ts">
 import {Vue, Component, Watch} from 'vue-property-decorator'
-import {ErrorResponse, FormKeys} from 'nettbureau_common'
+import {ErrorResponse, FormKeys, formRules} from 'nettbureau_common'
 import {sendUserData} from '../api/UserApi'
-import { formRules } from 'nettbureau_common'
 import {InvalidFormError} from '../InvalidFormError'
 
 @Component
@@ -191,11 +190,12 @@ export default class Home extends Vue {
 
   resetState() {
     //@ts-ignore
+    this.sentForm = false
     this.$refs.form.resetValidation()
+    Object.keys(this.formValues).forEach(key => this.formValues[key as FormKeys] = '')
     if(this.errorMessages) {
       Object.keys(this.errorMessages).forEach(key => this.errorMessages![key as FormKeys] = [])
     }
-    Object.keys(this.formValues).forEach(key => this.formValues[key as FormKeys] = '')
   }
 }
 </script>

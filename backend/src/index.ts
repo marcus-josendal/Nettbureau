@@ -23,7 +23,7 @@ app.post('/api/user', async (req, res) => {
     if(validationResult.length === 0) {
         try {
             const ioMessage = createPersonaMail(formData)
-            await sendMail('io@nettbureau.no.', 'Personal info', ioMessage)
+            await sendMail('io@nettbureau.no', 'Personal info', ioMessage)
 
             const confirmMessage = createConfirmMail(`${formData.firstName} ${formData.surName}`)
             await sendMail(formData.email, 'We recieved your personal data', confirmMessage)

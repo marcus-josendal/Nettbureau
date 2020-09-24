@@ -4,7 +4,8 @@
   "private": true,
   "workspaces": ["common","frontend", "backend"],
   "scripts": {
-    "start:backend": "(cd common && yarn build && cd .. && cd backend && yarn serve)",
+    "build:backend": "cd common && yarn build && cd .. && cd backend && yarn build",
+    "start:backend": "(cd backend && yarn serve)",
     "start:frontend": "(cd frontend && yarn serve)"
   }
 }
