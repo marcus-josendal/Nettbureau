@@ -169,7 +169,7 @@ export default class Home extends Vue {
           this.sentForm = true
           this.resetState()
         }).catch((err: InvalidFormError) => {
-          if (err.response?.status === 400) {
+          if (err.response.status === 400) {
             this.formValuesSnapshot = {...this.formValues}
             this.errorMessages = this.buildError(err.response.data.error)
           } else {
