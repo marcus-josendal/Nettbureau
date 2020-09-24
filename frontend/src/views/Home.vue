@@ -1,7 +1,8 @@
 <template>
   <div class="container--main">
-    <v-row class="justify-space-around align-end" no-gutters>
-      <h1 class="pb-5">Personopplysninger</h1>
+    <v-row class="flex-column justify-end align-center mb-5" no-gutters>
+      <h1 class="pb-1">Personopplysninger</h1>
+      <span class="font-weight-light">dataene sendes til io@nettbureau.no</span>
     </v-row>
     <v-form ref="form" v-model="validForm">
       <v-row class="justify-center">
@@ -12,6 +13,7 @@
           <v-text-field
               outlined
               class="mt-0"
+              validate-on-blur
               background-color="white"
               prepend-inner-icon="fas fa-user fa-fw"
               v-model="formValues.firstName"
@@ -26,9 +28,11 @@
           <v-text-field
               outlined
               class="mt-0"
+              validate-on-blur
               background-color="white"
               prepend-inner-icon="fas fa-user fa-fw"
               v-model="formValues.surName"
+              :rules="formRules.required"
               :error-messages="errorMessages ? errorMessages[formKeys.SurName] : []"
           />
         </v-col>
@@ -41,6 +45,7 @@
           <v-text-field
               outlined
               class="mt-0"
+              validate-on-blur
               background-color="white"
               prepend-inner-icon="fas fa-phone fa-fw"
               v-model="formValues.phoneNumber"
@@ -55,6 +60,7 @@
           <v-text-field
               outlined
               class="mt-0"
+              validate-on-blur
               background-color="white"
               prepend-inner-icon="fas fa-at fa-fw"
               v-model="formValues.email"
@@ -71,6 +77,7 @@
           <v-text-field
               outlined
               class="mt-0"
+              validate-on-blur
               background-color="white"
               prepend-inner-icon="fas fa-map fa-fw"
               v-model="formValues.zipCode"
@@ -94,9 +101,8 @@
         </v-col>
       </v-row>
     </v-form>
-    <v-row class="justify-center" no-gutters>
-      <span class="error--text">{{ internalServerError }}</span>
-    </v-row>
+    <span v-if="sentForm" class="status--text success--text">Informasjonen din er sendt!</span>
+    <span class="status--text error--text">{{ internalServerError }}</span>
     <v-row class="justify-center" no-gutters>
       <v-btn @click="resetState" class="mr-5" color="white">Fjern Utfylling</v-btn>
       <v-tooltip :disabled="validForm" max-width="200" bottom>
@@ -106,9 +112,10 @@
                 color="#3060AE"
                 class="white--text"
                 :loading="loading"
+                :disabled="!validForm"
                 @click="submitUserData"
             >
-              Opprett bruker
+              Send din informasjon
             </v-btn>
           </div>
         </template>
@@ -156,10 +163,13 @@ export default class Home extends Vue {
 
   submitUserData() {
     this.loading = true
+    this.sentForm = false
     this.internalServerError = null
     sendUserData(this.formValues)
-        .then(() => this.sentForm = true)
-        .catch((err: InvalidFormError) => {
+        .then(() => {
+          this.sentForm = true
+          this.resetState()
+        }).catch((err: InvalidFormError) => {
           if (err.response?.status === 400) {
             this.formValuesSnapshot = {...this.formValues}
             this.errorMessages = this.buildError(err.response.data.error)
@@ -182,6 +192,9 @@ export default class Home extends Vue {
   resetState() {
     //@ts-ignore
     this.$refs.form.resetValidation()
+    if(this.errorMessages) {
+      Object.keys(this.errorMessages).forEach(key => this.errorMessages![key as FormKeys] = [])
+    }
     Object.keys(this.formValues).forEach(key => this.formValues[key as FormKeys] = '')
   }
 }
@@ -195,5 +208,18 @@ export default class Home extends Vue {
   padding: 12px
   width: 80vw
   margin: 0 auto
+
+.status--text
+  font-weight: bold
+  margin-bottom: 18px
+  text-align: center
+  &:after
+    content: "\200D"
+
+.success--text
+  color: #4CAF50
+
+.error--text
+  color: #b71c1c
 </style>
 

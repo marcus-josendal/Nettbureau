@@ -2,5 +2,9 @@
   "name": "nettbureau_task",
   "version": "0.1.0",
   "private": true,
-  "workspaces": ["common","frontend", "backend"]
+  "workspaces": ["common","frontend", "backend"],
+  "scripts": {
+    "start:backend": "(cd common && yarn build && cd .. && cd backend && yarn serve)",
+    "start:frontend": "(cd frontend && yarn serve)"
+  }
 }

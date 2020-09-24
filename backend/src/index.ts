@@ -4,7 +4,7 @@ import * as bodyParser from 'body-parser'
 import {sendMail} from './mail/mailerService'
 import { FormKeys, formRules} from 'nettbureau_common'
 import {createConfirmMail, createPersonaMail} from './mail/mailTemplates'
-import { validateAgainstRules, validZip} from './validation/validate';
+import { validateAgainstRules, validZip} from './validation/validate'
 const app = express()
 app.use(bodyParser.json())
 dotenv.config()
@@ -23,11 +23,11 @@ app.post('/api/user', async (req, res) => {
     if(validationResult.length === 0) {
         try {
             const ioMessage = createPersonaMail(formData)
-            await sendMail('marcus19971997@gmail.com', 'Personal info', ioMessage)
+            await sendMail('io@nettbureau.no.', 'Personal info', ioMessage)
 
             const confirmMessage = createConfirmMail(`${formData.firstName} ${formData.surName}`)
             await sendMail(formData.email, 'We recieved your personal data', confirmMessage)
-            res.send(200)
+            res.sendStatus(200)
         } catch (err) {
             res.status(500).send({error: err})
         }
